@@ -4,25 +4,39 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 public class exe_Locator {
     WebDriver driver;
-    By name = By.xpath("//input[@id='txtFirstname']");
-
-    //WebElement submitButton = driver.findElement(By.xpath("//input[@id='txtFirstname']"));
-    //WebElement name = driver.findElement(By.xpath("//input[@id='txtFirstname']"));
+    By firstName = By.xpath("//input[@id='txtFirstname']");
+    By submit = By.xpath("//button[@class='btn_pink_sm fs16']");
+    By email = By.xpath("//input[@id='txtEmail']");
+    By emailCF = By.xpath("//input[@id='txtCEmail']");
+    By password = By.xpath("//input[@id='txtPassword']");
+    By passwordConfirm = By.xpath("//input[@id='txtCPassword']");
+    By phone    = By.xpath("//input[@id='txtPhone']");
 
     @BeforeClass
     public void beforeClass() {
         driver = new ChromeDriver();
         driver.get("https://alada.vn/tai-khoan/dang-ky.html");
+        //firstName = driver.findElement(By.xpath("//input[@id='txtFirstname']"));
+    }
+
+    public void sendKeysElement(By by, String value) {
+        WebElement element = driver.findElement(by);
+        element.sendKeys(value);
+    }
+
+    public void clickElement(By by) {
+        WebElement element = driver.findElement(by);
+        element.click();
     }
 
     @Test
     public void TC_01() throws InterruptedException {
+
         driver.findElement(By.xpath("//button[@class='btn_pink_sm fs16']")).click();
         Thread.sleep(3000);
 
@@ -38,8 +52,8 @@ public class exe_Locator {
     public void TC_02() throws InterruptedException {
         Thread.sleep(3000);
 
-        driver.findElement(By.xpath("//input[@id='txtFirstname']")).sendKeys("abc");
-        driver.findElement(By.xpath("//input[@id='txtEmail']")).sendKeys("abc123");
+        firstName.sendKeysElement("abc");
+        email.sendKeys("abc123");
         driver.findElement(By.xpath("//input[@id='txtCEmail']")).sendKeys("abc123");
         driver.findElement(By.xpath("//input[@id='txtPassword']")).sendKeys("abc123");
         driver.findElement(By.xpath("//input[@id='txtCPassword']")).sendKeys("abc123");
