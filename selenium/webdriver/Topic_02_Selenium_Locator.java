@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
 import java.util.List;
 
 public class Topic_02_Selenium_Locator {
-    WebDriver driver;
+        WebDriver driver;
 
 
 
