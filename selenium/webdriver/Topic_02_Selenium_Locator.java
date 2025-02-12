@@ -3,6 +3,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.locators.RelativeLocator;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -17,7 +18,8 @@ public class Topic_02_Selenium_Locator {
     @BeforeClass
     public void beforeClass() {
         driver = new ChromeDriver();
-        driver.get("https://demo.nopcommerce.com/register");
+        //driver.get("https://demo.nopcommerce.com/register");
+        driver.get("https://demo.nopcommerce.com/login");
     }
 
    // @Test
@@ -127,6 +129,29 @@ public class Topic_02_Selenium_Locator {
         driver.findElement(By.xpath("//select[@name='DateOfBirthDay']"));
 
 
+    }
+
+    @Test
+    public void TC_09_Relative_Locator() {
+        //element A
+        By passwordTextboxBy = By.xpath("//input[@id='Password']");
+
+        WebElement passwordTextbox = driver.findElement(By.xpath("//input[@id='Password']"));
+        //element B
+        By rememberMeCheckBoxBy = By.xpath("//input[@id='RememberMe']");
+        //element C
+        By forgotPasswordlinkBy = By.xpath("//a[@href='/passwordrecovery']");
+        //element D
+        By loginButtonBy = By.xpath("//button[@class='button-1 login-button']");
+
+        //element E
+        WebElement rememberMeTextBox = driver.findElement(RelativeLocator.with(By.tagName("label"))
+                .above(loginButtonBy)
+                .below(passwordTextboxBy)
+                .toLeftOf(forgotPasswordlinkBy)
+                .toRightOf(rememberMeCheckBoxBy)
+        );
+        //chu yeu phuc vu test giao dien
     }
 
 
