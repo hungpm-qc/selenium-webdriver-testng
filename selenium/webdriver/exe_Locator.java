@@ -34,10 +34,15 @@ public class exe_Locator {
         element.click();
     }
 
+    public void clearText(By by){
+        WebElement element = driver.findElement(by);
+        element.clear();
+    }
+
     @Test
     public void TC_01() throws InterruptedException {
-
-        driver.findElement(By.xpath("//button[@class='btn_pink_sm fs16']")).click();
+        clickElement(submit);
+        //driver.findElement(By.xpath("//button[@class='btn_pink_sm fs16']")).click();
         Thread.sleep(3000);
 
         driver.findElement(By.xpath("//label[contains(text(),'Vui lòng nhập họ tên')]")).isDisplayed();
@@ -52,14 +57,14 @@ public class exe_Locator {
     public void TC_02() throws InterruptedException {
         Thread.sleep(3000);
 
-        firstName.sendKeysElement("abc");
-        email.sendKeys("abc123");
-        driver.findElement(By.xpath("//input[@id='txtCEmail']")).sendKeys("abc123");
-        driver.findElement(By.xpath("//input[@id='txtPassword']")).sendKeys("abc123");
-        driver.findElement(By.xpath("//input[@id='txtCPassword']")).sendKeys("abc123");
-        driver.findElement(By.xpath("//input[@id='txtPhone']")).sendKeys("0123456789");
+        sendKeysElement(firstName,"abc");
+        sendKeysElement(email,"abc");
+        sendKeysElement(emailCF,"abc");
+        sendKeysElement(password,"abc123");
+        sendKeysElement(passwordConfirm,"abc123");
+        sendKeysElement(phone,"0123456789");
 
-        driver.findElement(By.xpath("//button[@class='btn_pink_sm fs16']")).click();
+        clickElement(submit);
 
         driver.findElement(By.xpath("//label[contains(text(),'Vui lòng nhập email hợp lệ')]")).isDisplayed();
         driver.findElement(By.xpath("//label[contains(text(),'Email nhập lại không đúng')]")).isDisplayed();
@@ -69,14 +74,14 @@ public class exe_Locator {
     public void TC_03() throws InterruptedException {
         Thread.sleep(3000);
 
-        driver.findElement(By.xpath("//input[@id='txtFirstname']")).sendKeys("abc");
-        driver.findElement(By.xpath("//input[@id='txtEmail']")).sendKeys("abc123@gmail.com");
-        driver.findElement(By.xpath("//input[@id='txtCEmail']")).sendKeys("abc1234@gmail.com");
-        driver.findElement(By.xpath("//input[@id='txtPassword']")).sendKeys("abc123");
-        driver.findElement(By.xpath("//input[@id='txtCPassword']")).sendKeys("abc123");
-        driver.findElement(By.xpath("//input[@id='txtPhone']")).sendKeys("0123456789");
+        sendKeysElement(firstName,"abc");
+        sendKeysElement(email,"abc123@gmail.com");
+        sendKeysElement(emailCF,"abc1234@gmail.com");
+        sendKeysElement(password,"abc123");
+        sendKeysElement(passwordConfirm,"abc123");
+        sendKeysElement(phone,"0123456789");
 
-        driver.findElement(By.xpath("//button[@class='btn_pink_sm fs16']")).click();
+        clickElement(submit);
 
         //driver.findElement(By.xpath("//label[contains(text(),'Vui lòng nhập email hợp lệ')]")).isDisplayed();
         driver.findElement(By.xpath("//label[contains(text(),'Email nhập lại không đúng')]")).isDisplayed();
@@ -85,14 +90,14 @@ public class exe_Locator {
     @Test
     public void TC_04() throws InterruptedException {
         Thread.sleep(3000);
+        sendKeysElement(firstName,"abc");
+        sendKeysElement(email,"abc123@gmail.com");
+        sendKeysElement(emailCF,"abc123@gmail.com");
+        sendKeysElement(password,"abc12");
+        sendKeysElement(passwordConfirm,"abc12");
+        sendKeysElement(phone,"0123456789");
 
-        driver.findElement(By.xpath("//input[@id='txtFirstname']")).sendKeys("abc");
-        driver.findElement(By.xpath("//input[@id='txtEmail']")).sendKeys("abc123@gmail.com");
-        driver.findElement(By.xpath("//input[@id='txtCEmail']")).sendKeys("abc123@gmail.com");
-        driver.findElement(By.xpath("//input[@id='txtPassword']")).sendKeys("abc12");
-        driver.findElement(By.xpath("//input[@id='txtCPassword']")).sendKeys("abc12");
-        driver.findElement(By.xpath("//input[@id='txtPhone']")).sendKeys("0123456789");
-        driver.findElement(By.xpath("//button[@class='btn_pink_sm fs16']")).click();
+        clickElement(submit);
 
         driver.findElement(By.xpath("//label[contains(text(),'Mật khẩu phải có ít nhất 6 ký tự') and contains(@id,'txtPassword-error')]")).isDisplayed();
         driver.findElement(By.xpath("//label[contains(text(),'Mật khẩu phải có ít nhất 6 ký tự') and contains(@id,'txtCPassword-error')]")).isDisplayed();
@@ -106,13 +111,14 @@ public class exe_Locator {
     @Test
     public void TC_05() throws InterruptedException {
         Thread.sleep(3000);
-        driver.findElement(By.xpath("//input[@id='txtFirstname']")).sendKeys("abc");
-        driver.findElement(By.xpath("//input[@id='txtEmail']")).sendKeys("abc123@gmail.com");
-        driver.findElement(By.xpath("//input[@id='txtCEmail']")).sendKeys("abc123@gmail.com");
-        driver.findElement(By.xpath("//input[@id='txtPassword']")).sendKeys("abc123");
-        driver.findElement(By.xpath("//input[@id='txtCPassword']")).sendKeys("abc124");
-        driver.findElement(By.xpath("//input[@id='txtPhone']")).sendKeys("0123456789");
-        driver.findElement(By.xpath("//button[@class='btn_pink_sm fs16']")).click();
+        sendKeysElement(firstName,"abc");
+        sendKeysElement(email,"abc123@gmail.com");
+        sendKeysElement(emailCF,"abc1234@gmail.com");
+        sendKeysElement(password,"abc123");
+        sendKeysElement(passwordConfirm,"abc1234");
+        sendKeysElement(phone,"0123456789");
+
+        clickElement(submit);
 
         //driver.findElement(By.xpath("//label[contains(text(),'Vui lòng nhập email hợp lệ')]")).isDisplayed();
         driver.findElement(By.xpath("//label[contains(text(),'Mật khẩu bạn nhập không khớp')and contains(@id,'txtCPassword-error')]")).isDisplayed();
@@ -121,16 +127,22 @@ public class exe_Locator {
     @Test
     public void TC_06() throws InterruptedException {
         Thread.sleep(3000);
-        driver.findElement(By.xpath("//input[@id='txtFirstname']")).sendKeys("abc");
-        driver.findElement(By.xpath("//input[@id='txtEmail']")).sendKeys("abc123@gmail.com");
-        driver.findElement(By.xpath("//input[@id='txtCEmail']")).sendKeys("abc123@gmail.com");
-        driver.findElement(By.xpath("//input[@id='txtPassword']")).sendKeys("abc123");
-        driver.findElement(By.xpath("//input[@id='txtCPassword']")).sendKeys("abc124");
-        driver.findElement(By.xpath("//input[@id='txtPhone']")).sendKeys("0123456789");
-        driver.findElement(By.xpath("//button[@class='btn_pink_sm fs16']")).click();
+        sendKeysElement(firstName,"abc");
+        sendKeysElement(email,"abc123@gmail.com");
+        sendKeysElement(emailCF,"abc123@gmail.com");
+        sendKeysElement(password,"abc123");
+        sendKeysElement(passwordConfirm,"abc123");
+        sendKeysElement(phone,"012345678");
+
+        clickElement(submit);
 
         //driver.findElement(By.xpath("//label[contains(text(),'Vui lòng nhập email hợp lệ')]")).isDisplayed();
-        driver.findElement(By.xpath("//label[contains(text(),'Mật khẩu bạn nhập không khớp')and contains(@id,'txtCPassword-error')]")).isDisplayed();
+        driver.findElement(By.xpath("//label[contains(text(),'Số điện thoại phải từ 10-11 số.')]")).isDisplayed();
+
+        Thread.sleep(3000);
+        clearText(phone);
+        sendKeysElement(phone,"123456");
+        driver.findElement(By.xpath("//label[contains(text(),'Số điện thoại bắt đầu bằng: 09 - 03 - 012 - 016 - 018 - 019 - 088 - 03 - 05 - 07 - 08')]")).isDisplayed();
     }
 
 //    @AfterClass
