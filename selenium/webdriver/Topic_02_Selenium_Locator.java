@@ -11,7 +11,7 @@ import org.testng.annotations.Test;
 import java.util.List;
 
 public class Topic_02_Selenium_Locator {
-    WebDriver driver;
+        WebDriver driver;
 
 
 
@@ -150,6 +150,8 @@ public class Topic_02_Selenium_Locator {
                 .below(passwordTextboxBy)
                 .toLeftOf(forgotPasswordlinkBy)
                 .toRightOf(rememberMeCheckBoxBy)
+                .near(rememberMeCheckBoxBy)
+                .near(forgotPasswordlinkBy)
         );
         //chu yeu phuc vu test giao dien
     }
