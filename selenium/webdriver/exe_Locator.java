@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -43,7 +44,10 @@ public class exe_Locator {
     public void TC_01() throws InterruptedException {
 
         clickElement(submit);
-        Thread.sleep(3000);
+        //Thread.sleep(3000);
+        //driver.findElement(By.xpath("//input[@id='txtFirstname-error']")).getText();
+        //verify vs đữ liệu mong đợi
+        Assert.assertEquals(driver.findElement(By.xpath("//label[@id='txtFirstname-error']")).getText(), "Vui lòng nhập họ tên");
 
         driver.findElement(By.xpath("//label[contains(text(),'Vui lòng nhập họ tên')]")).isDisplayed();
         driver.findElement(By.xpath("//label[contains(text(),'Vui lòng nhập email')]")).isDisplayed();
@@ -131,9 +135,12 @@ public class exe_Locator {
         driver.findElement(By.xpath("//input[@id='txtCEmail']")).sendKeys("abc123@gmail.com");
         driver.findElement(By.xpath("//input[@id='txtPassword']")).sendKeys("abc123");
         driver.findElement(By.xpath("//input[@id='txtCPassword']")).sendKeys("abc124");
-        driver.findElement(By.xpath("//input[@id='txtPhone']")).sendKeys("0123456789");
+        driver.findElement(By.xpath("//input[@id='txtPhone']")).sendKeys("012345678");
         driver.findElement(By.xpath("//button[@class='btn_pink_sm fs16']")).click();
 
+        clearText(phone);
+
+        sendKeysElement(phone, "1234567");
         //driver.findElement(By.xpath("//label[contains(text(),'Vui lòng nhập email hợp lệ')]")).isDisplayed();
         driver.findElement(By.xpath("//label[contains(text(),'Mật khẩu bạn nhập không khớp')and contains(@id,'txtCPassword-error')]")).isDisplayed();
     }

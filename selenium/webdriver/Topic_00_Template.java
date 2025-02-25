@@ -12,7 +12,7 @@ public class Topic_00_Template {
     @BeforeClass
     public void beforeClass() {
         driver = new ChromeDriver();
-        driver.get("https://www.facebook.com/");
+        driver.get("https://live.techpanda.org/");
     }
 
     @Test
