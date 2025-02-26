@@ -52,8 +52,8 @@ public class exe_Locator {
     public void TC_02() throws InterruptedException {
         Thread.sleep(3000);
 
-        firstName.sendKeysElement("abc");
-        email.sendKeys("abc123");
+        //firstName.sendKeysElement("abc");
+        //email.sendKeysElement("abc123");
         driver.findElement(By.xpath("//input[@id='txtCEmail']")).sendKeys("abc123");
         driver.findElement(By.xpath("//input[@id='txtPassword']")).sendKeys("abc123");
         driver.findElement(By.xpath("//input[@id='txtCPassword']")).sendKeys("abc123");

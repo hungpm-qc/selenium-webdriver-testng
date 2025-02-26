@@ -20,6 +20,7 @@ public class Topic_03_Xpath_Css {
 
     @Test
     public void TC_01_() {
+
         driver.findElement(By.xpath("//div[@class='footer']//a[@title='My Account']")).click();
     }
 
@@ -30,6 +31,7 @@ public class Topic_03_Xpath_Css {
 
     @AfterClass
     public void afterClass() {
+
         driver.quit();
     }
 
