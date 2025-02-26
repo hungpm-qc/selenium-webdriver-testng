@@ -34,10 +34,15 @@ public class exe_Locator {
         element.click();
     }
 
+    public void clearText(By by) {
+        WebElement element = driver.findElement(by);
+        element.clear();
+    }
+
     @Test
     public void TC_01() throws InterruptedException {
 
-        driver.findElement(By.xpath("//button[@class='btn_pink_sm fs16']")).click();
+        clickElement(submit);
         Thread.sleep(3000);
 
         driver.findElement(By.xpath("//label[contains(text(),'Vui lòng nhập họ tên')]")).isDisplayed();
@@ -52,8 +57,8 @@ public class exe_Locator {
     public void TC_02() throws InterruptedException {
         Thread.sleep(3000);
 
-        //firstName.sendKeysElement("abc");
-        //email.sendKeysElement("abc123");
+        sendKeysElement(firstName,"abc");
+        sendKeysElement(email,"abc123");
         driver.findElement(By.xpath("//input[@id='txtCEmail']")).sendKeys("abc123");
         driver.findElement(By.xpath("//input[@id='txtPassword']")).sendKeys("abc123");
         driver.findElement(By.xpath("//input[@id='txtCPassword']")).sendKeys("abc123");

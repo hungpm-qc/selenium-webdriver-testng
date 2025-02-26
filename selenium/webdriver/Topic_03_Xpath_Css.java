@@ -22,10 +22,12 @@ public class Topic_03_Xpath_Css {
     public void TC_01_() {
 
         driver.findElement(By.xpath("//div[@class='footer']//a[@title='My Account']")).click();
+
+
     }
 
     @Test
-    public void TC_02_() {
+    public void TC_02_() { 
 
     }
 
