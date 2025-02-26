@@ -1,8 +1,10 @@
 package webdriver;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -13,11 +15,12 @@ public class Topic_09_WebElement_Exe {
     @BeforeClass
     public void beforeClass() {
         driver = new ChromeDriver();
-        driver.get("https://automationfc.github.io/basic-form/index.html");
+
     }
 
     @Test
     public void TC_01_Displayed() {
+        driver.get("https://automationfc.github.io/basic-form/index.html");
         WebElement emailTextbox = driver.findElement(By.xpath("//input[@id='mail']"));
         if (emailTextbox.isDisplayed()) {
             System.out.println("Email text box is displayed");
@@ -53,6 +56,7 @@ public class Topic_09_WebElement_Exe {
 
     @Test
     public void TC_02_Enable() {
+        driver.get("https://automationfc.github.io/basic-form/index.html");
         WebElement emailTextbox = driver.findElement(By.xpath("//input[@id='mail']"));
 
         if (emailTextbox.isEnabled()) {
@@ -152,6 +156,7 @@ public class Topic_09_WebElement_Exe {
 
     @Test
     public void TC_03_Selected() {
+        driver.get("https://automationfc.github.io/basic-form/index.html");
         WebElement ageUnder18 = driver.findElement(By.xpath("//input[@id='under_18']"));
         ageUnder18.click();
         if (ageUnder18.isSelected()) {
@@ -171,9 +176,42 @@ public class Topic_09_WebElement_Exe {
         }
     }
 
-    @AfterClass
-    public void afterClass() {
-        driver.quit();
+    @Test
+    public void TC_04_Register() {
+        driver.get("https://login.mailchimp.com/signup/");
+        WebElement email = driver.findElement(By.xpath("//input[@id='email']"));
+        //WebElement userName = driver.findElement(By.xpath("//input[@id='new_username']"));
+        WebElement passWord = driver.findElement(By.xpath("//input[@id='new_password']"));
+        //WebElement phone = driver.findElement(By.xpath("//input[@id='inputField']"));
+        //WebElement submit = driver.findElement(By.xpath("//button[@type='submit']"));
+
+        email.sendKeys("abc@gmail.com");
+        email.sendKeys(Keys.TAB);
+
+        //only number
+        passWord.sendKeys("12345");
+        passWord.sendKeys(Keys.TAB);
+        Assert.assertTrue(driver.findElement(By.xpath("//li[@class='lowercase-char not-completed']")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.xpath("//li[@class='uppercase-char not-completed']")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.xpath("//li[@class='number-char completed']")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.xpath("//li[@class='special-char not-completed']")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.xpath("//li[@class='8-char not-completed']")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.xpath("//li[@class='username-check completed']")).isDisplayed());
+        //Assert.assertTrue(driver.findElement(By.xpath("//li[@class='plus-50 error completed']")).isDisplayed());
+
+        //only lower text
+        passWord.clear();
+        passWord.sendKeys("bmg");
+        passWord.sendKeys(Keys.TAB);
+        Assert.assertTrue(driver.findElement(By.xpath("//li[@class='lowercase-char completed']")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.xpath("//li[@class='uppercase-char not-completed']")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.xpath("//li[@class='number-char not-completed']")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.xpath("//li[@class='special-char not-completed']")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.xpath("//li[@class='8-char not-completed']")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.xpath("//li[@class='username-check completed']")).isDisplayed());
+        //Assert.assertTrue(driver.findElement(By.xpath("//li[@class='plus-50 error completed']")).isDisplayed());
+
+
     }
 
 }
