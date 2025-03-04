@@ -1,6 +1,4 @@
-package javaSDET;
+package JavaSDET;
 
-    public class Topic_02_String {
-
-        
+public class Topic_02_String {
 }

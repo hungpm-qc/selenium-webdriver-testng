@@ -1,6 +1,4 @@
-package javaSDET;
+package JavaSDET;
 
-    public class Topic_01_DataType {
-
-
+public class Topic_01_DataType {
 }
