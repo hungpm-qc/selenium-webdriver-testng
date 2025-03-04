@@ -1,11 +1,15 @@
 package webdriver;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
+import java.time.Duration;
 
 public class Topic_09_WebElement_Exe {
     WebDriver driver;
@@ -13,11 +17,13 @@ public class Topic_09_WebElement_Exe {
     @BeforeClass
     public void beforeClass() {
         driver = new ChromeDriver();
-        driver.get("https://automationfc.github.io/basic-form/index.html");
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+
     }
 
     @Test
     public void TC_01_Displayed() {
+        driver.get("https://automationfc.github.io/basic-form/index.html");
         WebElement emailTextbox = driver.findElement(By.xpath("//input[@id='mail']"));
         if (emailTextbox.isDisplayed()) {
             System.out.println("Email text box is displayed");
@@ -53,6 +59,7 @@ public class Topic_09_WebElement_Exe {
 
     @Test
     public void TC_02_Enable() {
+        driver.get("https://automationfc.github.io/basic-form/index.html");
         WebElement emailTextbox = driver.findElement(By.xpath("//input[@id='mail']"));
 
         if (emailTextbox.isEnabled()) {
@@ -152,6 +159,7 @@ public class Topic_09_WebElement_Exe {
 
     @Test
     public void TC_03_Selected() {
+        driver.get("https://automationfc.github.io/basic-form/index.html");
         WebElement ageUnder18 = driver.findElement(By.xpath("//input[@id='under_18']"));
         ageUnder18.click();
         if (ageUnder18.isSelected()) {
@@ -171,9 +179,96 @@ public class Topic_09_WebElement_Exe {
         }
     }
 
-    @AfterClass
-    public void afterClass() {
-        driver.quit();
+    @Test
+    public void TC_04_Register() {
+        driver.get("https://login.mailchimp.com/signup/");
+        WebElement email = driver.findElement(By.xpath("//input[@id='email']"));
+        //WebElement userName = driver.findElement(By.xpath("//input[@id='new_username']"));
+        WebElement passWord = driver.findElement(By.xpath("//input[@id='new_password']"));
+        //WebElement phone = driver.findElement(By.xpath("//input[@id='inputField']"));
+        //WebElement submit = driver.findElement(By.xpath("//button[@type='submit']"));
+
+        email.sendKeys("abc@gmail.com");
+        email.sendKeys(Keys.TAB);
+
+        //only number
+        passWord.sendKeys("12345");
+        passWord.sendKeys(Keys.TAB);
+        Assert.assertTrue(driver.findElement(By.xpath("//li[@class='lowercase-char not-completed']")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.xpath("//li[@class='uppercase-char not-completed']")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.xpath("//li[@class='number-char completed']")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.xpath("//li[@class='special-char not-completed']")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.xpath("//li[@class='8-char not-completed']")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.xpath("//li[@class='username-check completed']")).isDisplayed());
+        //Assert.assertTrue(driver.findElement(By.xpath("//li[@class='plus-50 error completed']")).isDisplayed());
+
+        //only lower text
+        passWord.clear();
+        passWord.sendKeys("bmg");
+        passWord.sendKeys(Keys.TAB);
+        Assert.assertTrue(driver.findElement(By.xpath("//li[@class='lowercase-char completed']")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.xpath("//li[@class='uppercase-char not-completed']")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.xpath("//li[@class='number-char not-completed']")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.xpath("//li[@class='special-char not-completed']")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.xpath("//li[@class='8-char not-completed']")).isDisplayed());
+        Assert.assertTrue(driver.findElement(By.xpath("//li[@class='username-check completed']")).isDisplayed());
+        //Assert.assertTrue(driver.findElement(By.xpath("//li[@class='plus-50 error completed']")).isDisplayed());
+
+        //pass hợp lệ
+        passWord.clear();
+        passWord.sendKeys("123456aA@");
+        passWord.sendKeys(Keys.TAB);
+
+        WebElement passHint = driver.findElement(By.xpath("//div[@id='passwordHint']//ul[@aria-label='Password helper text']"));
+        if (passHint.isDisplayed()) {
+            System.out.println("Pass hint is Displayed");
+        } else {
+            System.out.println("Pass hint is not Displayed");
+        }
+
+    }
+
+    @Test
+    public void TC_05_Login_Empty() {
+        driver.get("http://live.techpanda.org/");
+        driver.findElement(By.xpath("(//a[@title='My Account'][normalize-space()='My Account'])[2]")).click();
+        driver.findElement(By.xpath("(//button[@id='send2'])[1]")).click();
+        Assert.assertEquals(driver.findElement(By.xpath("(//div[@id='advice-required-entry-email'])[1]")).getText(),"This is a required field.");
+        Assert.assertEquals(driver.findElement(By.xpath("(//div[@id='advice-required-entry-pass'])[1]")).getText(),"This is a required field.");
+    }
+
+    @Test
+    public void TC_06_Login_Invalid_Email() {
+        driver.get("http://live.techpanda.org/");
+        driver.findElement(By.xpath("(//a[@title='My Account'][normalize-space()='My Account'])[2]")).click();
+        driver.findElement(By.xpath("//input[@id='email']")).sendKeys("123434234@12312.123123");
+        driver.findElement(By.xpath("//input[@id='pass']")).sendKeys("123456");
+        driver.findElement(By.xpath("(//button[@id='send2'])[1]")).click();
+        Assert.assertEquals(driver.findElement(By.xpath("(//div[@id='advice-validate-email-email'])[1]")).getText(),"Please enter a valid email address. For example johndoe@domain.com.");
+    }
+
+    @Test
+    public void TC_07_Pass_less() {
+        driver.get("http://live.techpanda.org/");
+        driver.findElement(By.xpath("(//a[@title='My Account'][normalize-space()='My Account'])[2]")).click();
+        driver.findElement(By.xpath("//input[@id='email']")).sendKeys("auto@gmail.com");
+        driver.findElement(By.xpath("//input[@id='pass']")).sendKeys("123");
+        driver.findElement(By.xpath("(//button[@id='send2'])[1]")).click();
+        Assert.assertEquals(driver.findElement(By.xpath("(//div[@id='advice-validate-password-pass'])[1]")).getText(),"Please enter 6 or more characters without leading or trailing spaces.");
+    }
+
+    @Test
+    public void TC_08_Incorrect_Account() throws InterruptedException{
+        driver.get("http://live.techpanda.org/");
+        driver.findElement(By.xpath("(//a[@title='My Account'][normalize-space()='My Account'])[2]")).click();
+        driver.findElement(By.xpath("//input[@id='email']")).sendKeys("automation@gmail.com");
+        driver.findElement(By.xpath("//input[@id='pass']")).sendKeys("123123123");
+        System.out.println("timeout");
+//        Thread.sleep(2000);
+        driver.findElement(By.xpath("(//button[@id='send2'])[1]")).click();
+        Thread.sleep(2000);
+        driver.findElement(By.xpath("//button[@id='proceed-button']")).click();
+        Assert.assertEquals(driver.findElement(By.xpath("(//span[normalize-space()='Invalid login or password.'])[1]")).getText(),"Invalid login or password.");
     }
 
 }
