@@ -167,7 +167,7 @@ public class Topic_09_WebElement_Exe {
             System.out.println("languagues Java is selected");
 
         } else {
-            System.out.println("languaguesJava is not selected");
+            System.out.println("languagues Java is not selected");
         }
     }
 
