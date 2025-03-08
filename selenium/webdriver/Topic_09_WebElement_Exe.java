@@ -229,12 +229,13 @@ public class Topic_09_WebElement_Exe {
     }
 
     @Test
-    public void TC_05_Login_Empty() {
+    public void TC_05_Login_Empty() throws InterruptedException {
         driver.get("http://live.techpanda.org/");
         driver.findElement(By.xpath("(//a[@title='My Account'][normalize-space()='My Account'])[2]")).click();
         driver.findElement(By.xpath("(//button[@id='send2'])[1]")).click();
-        Assert.assertEquals(driver.findElement(By.xpath("(//div[@id='advice-required-entry-email'])[1]")).getText(),"This is a required field.");
-        Assert.assertEquals(driver.findElement(By.xpath("(//div[@id='advice-required-entry-pass'])[1]")).getText(),"This is a required field.");
+        Thread.sleep(2000);
+        Assert.assertEquals(driver.findElement(By.xpath("//div[@id='advice-required-entry-email']")).getText(),"This is a required field.");
+        Assert.assertEquals(driver.findElement(By.xpath("//div[@id='advice-required-entry-pass']")).getText(),"This is a required field.");
     }
 
     @Test
@@ -244,7 +245,9 @@ public class Topic_09_WebElement_Exe {
         driver.findElement(By.xpath("//input[@id='email']")).sendKeys("123434234@12312.123123");
         driver.findElement(By.xpath("//input[@id='pass']")).sendKeys("123456");
         driver.findElement(By.xpath("(//button[@id='send2'])[1]")).click();
+
         Assert.assertEquals(driver.findElement(By.xpath("(//div[@id='advice-validate-email-email'])[1]")).getText(),"Please enter a valid email address. For example johndoe@domain.com.");
+
     }
 
     @Test
