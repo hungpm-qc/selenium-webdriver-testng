@@ -158,9 +158,10 @@ public class Topic_10_TextBox_TextArea {
 
         driver.findElement(By.xpath("(//button[@type='button'])[4]")).click();
         driver.findElement(By.xpath("(//input[@class='oxd-input oxd-input--active'])[2]")).sendKeys(String.valueOf(number));
-        System.out.println(driver.findElement(By.xpath("(//input[@class='oxd-input oxd-input--active'])[2]")).getText());
-        String inputNumber = driver.findElement(By.xpath("(//input[@class='oxd-input oxd-input--active'])[2]")).getText();
-        System.out.println(inputNumber);
+        System.out.println(number);
+        //System.out.println(driver.findElement(By.xpath("(//input[@class='oxd-input oxd-input--active'])[2]")).getAttribute("value"));
+        //String inputNumber = driver.findElement(By.xpath("(//input[@class='oxd-input oxd-input--active'])[2]")).getAttribute("value");
+        //System.out.println(inputNumber);
         driver.findElement(By.xpath("(//textarea[@placeholder='Type Comments here'])[1]")).sendKeys("Auto\nwith\nselenium");
         String commentInput = driver.findElement(By.xpath("(//textarea[@placeholder='Type Comments here'])[1]")).getAttribute("value");
         System.out.println(commentInput);
@@ -171,7 +172,7 @@ public class Topic_10_TextBox_TextArea {
 
         //check thông tin mới thêm
         Thread.sleep(3000);
-       // Assert.assertEquals(driver.findElement(By.xpath("(//input[@class='oxd-input oxd-input--active'])[2]")).getAttribute("value"),inputNumber);
+        Assert.assertEquals(Integer.valueOf(driver.findElement(By.xpath("(//input[@class='oxd-input oxd-input--active'])[2]")).getAttribute("value")),number);
         Assert.assertEquals(driver.findElement(By.xpath("(//textarea[@placeholder='Type Comments here'])[1]")).getAttribute("value"),commentInput);
 
         //logout
