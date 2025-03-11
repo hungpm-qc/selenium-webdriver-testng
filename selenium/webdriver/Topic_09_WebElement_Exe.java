@@ -9,12 +9,15 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.time.Duration;
+
 public class Topic_09_WebElement_Exe {
     WebDriver driver;
 
     @BeforeClass
     public void beforeClass() {
         driver = new ChromeDriver();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
 
     }
 
@@ -172,7 +175,7 @@ public class Topic_09_WebElement_Exe {
             System.out.println("languagues Java is selected");
 
         } else {
-            System.out.println("languaguesJava is not selected");
+            System.out.println("languagues Java is not selected");
         }
     }
 
@@ -211,7 +214,64 @@ public class Topic_09_WebElement_Exe {
         Assert.assertTrue(driver.findElement(By.xpath("//li[@class='username-check completed']")).isDisplayed());
         //Assert.assertTrue(driver.findElement(By.xpath("//li[@class='plus-50 error completed']")).isDisplayed());
 
+        //pass hợp lệ
+        passWord.clear();
+        passWord.sendKeys("123456aA@");
+        passWord.sendKeys(Keys.TAB);
 
+        WebElement passHint = driver.findElement(By.xpath("//div[@id='passwordHint']//ul[@aria-label='Password helper text']"));
+        if (passHint.isDisplayed()) {
+            System.out.println("Pass hint is Displayed");
+        } else {
+            System.out.println("Pass hint is not Displayed");
+        }
+
+    }
+
+    @Test
+    public void TC_05_Login_Empty() throws InterruptedException {
+        driver.get("http://live.techpanda.org/");
+        driver.findElement(By.xpath("(//a[@title='My Account'][normalize-space()='My Account'])[2]")).click();
+        driver.findElement(By.xpath("(//button[@id='send2'])[1]")).click();
+        Thread.sleep(2000);
+        Assert.assertEquals(driver.findElement(By.xpath("//div[@id='advice-required-entry-email']")).getText(),"This is a required field.");
+        Assert.assertEquals(driver.findElement(By.xpath("//div[@id='advice-required-entry-pass']")).getText(),"This is a required field.");
+    }
+
+    @Test
+    public void TC_06_Login_Invalid_Email() {
+        driver.get("http://live.techpanda.org/");
+        driver.findElement(By.xpath("(//a[@title='My Account'][normalize-space()='My Account'])[2]")).click();
+        driver.findElement(By.xpath("//input[@id='email']")).sendKeys("123434234@12312.123123");
+        driver.findElement(By.xpath("//input[@id='pass']")).sendKeys("123456");
+        driver.findElement(By.xpath("(//button[@id='send2'])[1]")).click();
+
+        Assert.assertEquals(driver.findElement(By.xpath("(//div[@id='advice-validate-email-email'])[1]")).getText(),"Please enter a valid email address. For example johndoe@domain.com.");
+
+    }
+
+    @Test
+    public void TC_07_Pass_less() {
+        driver.get("http://live.techpanda.org/");
+        driver.findElement(By.xpath("(//a[@title='My Account'][normalize-space()='My Account'])[2]")).click();
+        driver.findElement(By.xpath("//input[@id='email']")).sendKeys("auto@gmail.com");
+        driver.findElement(By.xpath("//input[@id='pass']")).sendKeys("123");
+        driver.findElement(By.xpath("(//button[@id='send2'])[1]")).click();
+        Assert.assertEquals(driver.findElement(By.xpath("(//div[@id='advice-validate-password-pass'])[1]")).getText(),"Please enter 6 or more characters without leading or trailing spaces.");
+    }
+
+    @Test
+    public void TC_08_Incorrect_Account() throws InterruptedException{
+        driver.get("http://live.techpanda.org/");
+        driver.findElement(By.xpath("(//a[@title='My Account'][normalize-space()='My Account'])[2]")).click();
+        driver.findElement(By.xpath("//input[@id='email']")).sendKeys("automation@gmail.com");
+        driver.findElement(By.xpath("//input[@id='pass']")).sendKeys("123123123");
+        System.out.println("timeout");
+//        Thread.sleep(2000);
+        driver.findElement(By.xpath("(//button[@id='send2'])[1]")).click();
+        Thread.sleep(2000);
+        driver.findElement(By.xpath("//button[@id='proceed-button']")).click();
+        Assert.assertEquals(driver.findElement(By.xpath("(//span[normalize-space()='Invalid login or password.'])[1]")).getText(),"Invalid login or password.");
     }
 
 }
