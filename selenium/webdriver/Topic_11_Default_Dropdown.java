@@ -53,7 +53,7 @@ public class Topic_11_Default_Dropdown {
     }
 
     @Test
-    public void TC_02_rode() {
+    public void TC_02_rode() throws InterruptedException {
         driver.get("https://www.rode.com/wheretobuy");
         select = new Select(driver.findElement(By.xpath("//select[@id='country']")));
         select.selectByVisibleText("Vietnam");
@@ -61,13 +61,20 @@ public class Topic_11_Default_Dropdown {
         driver.findElement(By.xpath("//input[@id='map_search_query']")).sendKeys("HO CHI MINH");
         driver.findElement(By.xpath("//button[@class='btn btn-default']")).click();
 
-        List<WebElement> dealers = driver.findElements(By.xpath("//h3[text()='Dealer']/following-sibling::div//h4"));
+        Thread.sleep(1000);
+        List<WebElement> dealers = driver.findElements(By.xpath("//h3[text()='Dealers']//following-sibling::div//h4"));
         Assert.assertEquals(dealers.size(), 16);
+
+        for (WebElement element: dealers)
+        {
+            System.out.println(element.getText());
+        }
 
     }
 
     @AfterClass
     public void afterClass() {
+
         driver.quit();
     }
 
